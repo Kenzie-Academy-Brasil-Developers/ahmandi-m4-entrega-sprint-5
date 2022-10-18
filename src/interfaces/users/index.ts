@@ -9,6 +9,7 @@ export interface IUser {
     id: string
     name: string
     email: string
+    password?: string
     isAdm: boolean
     createdAt: Date
     updatedAt: Date
