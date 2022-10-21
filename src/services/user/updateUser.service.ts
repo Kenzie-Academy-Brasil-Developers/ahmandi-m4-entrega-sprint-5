@@ -2,6 +2,7 @@ import AppDataSource from '../../data-source';
 import { User } from '../../entities/user.entity';
 import bcrypt from 'bcrypt';
 import { IUserUpdate } from '../../interfaces/users';
+import { AppError } from '../../errors/appError';
 
 const userUpdateService = async (
 	data: IUserUpdate,
@@ -15,12 +16,12 @@ const userUpdateService = async (
 
 	if (!isAdm) {
 		if (tokenID !== id) {
-			throw new Error('User has permissions');
+			throw new AppError('User has permissions', 401);
 		}
 	}
 
 	if (!users) {
-		throw new Error('User not found');
+		throw new AppError('User not found', 404);
 	}
 
 	const keys = Object.keys(data);
@@ -30,7 +31,7 @@ const userUpdateService = async (
 		keys.includes('isActive') ||
 		keys.includes('id')
 	) {
-		throw new Error('Not allowed');
+		throw new AppError('Not allowed', 401);
 	}
 
 	const newPassword = bcrypt.hashSync(users.password, 10);

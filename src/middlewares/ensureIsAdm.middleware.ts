@@ -4,6 +4,7 @@ import 'dotenv/config';
 const ensureisAdm = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { isAdm } = req.user;
+
 		if (!isAdm) {
 			return res.status(403).json({ message: 'User has no permission' });
 		}

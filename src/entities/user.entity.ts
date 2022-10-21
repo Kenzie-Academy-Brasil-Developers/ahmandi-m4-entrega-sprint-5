@@ -4,10 +4,11 @@ import {
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
+	OneToMany,
 } from 'typeorm';
-// import { Exclude } from 'class-transformer';
+import { Schedules } from './schedule.entity';
 
-@Entity()
+@Entity('user')
 export class User {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -32,4 +33,7 @@ export class User {
 
 	@UpdateDateColumn()
 	updatedAt: Date;
+
+	@OneToMany(() => Schedules, (schedules) => schedules.user)
+	schedules: Schedules;
 }
